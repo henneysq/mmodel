@@ -45,9 +45,7 @@ EXTERNAL_STYLESHEETS = [
     }
 ]
 
-style = ["src\styles.css"]
-
-app = Dash(__name__, external_stylesheets=style)# external_stylesheets=EXTERNAL_STYLESHEETS)
+app = Dash(__name__, external_stylesheets=EXTERNAL_STYLESHEETS)# external_stylesheets=EXTERNAL_STYLESHEETS)
 
 # Declare server for Heroku deployment. Needed for Procfile.
 server = app.server
