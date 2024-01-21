@@ -56,20 +56,28 @@ app.layout = html.Div(
     ]
 )
 
-
 @callback(
-    Output("number-out", "children"),
-    Input("age", "value"),
-    Input("sex", "value"),
-    Input("prothesis", "value"),
-    Input("indication", "value"),
+        Output(component_id="number-out", component_property="children"),
+        Input(component_id="age", component_property="value")
 )
-def number_render(age, sex, prothesis, indication):
-    return f"sex: {sex}, age: {age}"
-    sex = encode_sex(sex=sex)
-    prothesis = encode_prosthesis(prothesis=prothesis)
-    risk = 0.03*sex + 0.1*age + 0.01*prothesis
-    return f"risk of something: {risk*100}%"
+def render_output(age):
+    return f"Age is {age}"
+
+# @callback(
+#     Output("number-out", "children"),
+#     Input("age", "value"),
+#     Input("sex", "value"),
+#     Input("prothesis", "value"),
+#     Input("indication", "value"),
+# )
+# def number_render(age, sex, prothesis, indication):
+#     return f"sex: {sex}, age: {age}"
+#     sex = encode_sex(sex=sex)
+#     prothesis = encode_prosthesis(prothesis=prothesis)
+#     indication = encode_indication(indication)
+#     indication = encode_indication(indication)
+#     risk = 0.03*sex + 0.1*age + 0.01*prothesis
+#     return f"risk of something: {risk*100}%"
 
 def encode_sex(sex: str) -> int:
     sex_map = {
@@ -85,6 +93,21 @@ def encode_prosthesis(prosthesis: str) -> int:
         'anatomical': 3
     }
     return prosthesis_map[prosthesis]
+
+def encode_indication(indication: str) -> int:
+    indication_map = {
+        'acute fracture': 0,
+        'fraktur sequelae': 1,
+        'osteoarthritis': 2,
+        'cuff damage': 4     
+    }
+    return indication_map[indication]
+
+def encode_comorb(comorb: str) -> int:
+    comorb_map = {
+        "yes": 1,
+        "no": 0
+    }
 
 if __name__ == "__main__":
     app.run(debug=True)
