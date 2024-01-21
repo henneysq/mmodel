@@ -37,6 +37,8 @@ SIDEBAR_STYLE = {
 }
 
 
+LR_INDENT = (600, 600)
+
 app = Dash(__name__, external_stylesheets=[dbc.themes.DARKLY], use_pages=True, pages_folder=".")# external_stylesheets=EXTERNAL_STYLESHEETS)
 
 # Declare server for Heroku deployment. Needed for Procfile.
@@ -65,7 +67,8 @@ sidebar = html.Div(
 
 
 info_content = html.Div(
-    [
+    style={'margin-left': f"{LR_INDENT[0]}px", 'margin-right': f"{LR_INDENT[1]}px", "margin-top":"7px"},
+    children=[
         dcc.Markdown(SITE_INFO)
     ]
 )
