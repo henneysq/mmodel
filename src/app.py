@@ -1,15 +1,13 @@
 
 from dash import Dash, dcc, html, Input, Output, callback
 
-welcome_msg = """ Hi Markos! Congratulations on becoming a dad!
-
-            Here's an ugly and incomplete rendition of your beautiful model.
-
-            Currently, all parameter weights are 0.01, and the off-set is 0.1.
-
-            Sex is encoded: male=1, female=2
-
-
+welcome_msg = """ Hi Markos! Congratulations on becoming a dad!\n
+            Here's an ugly and incomplete rendition of your beautiful model. It's in progress..\n
+            \n
+            Currently, all parameter weights are 0.01, and the off-set is 0.1.\n
+            Sex is encoded 'male': 1, 'female': 2\n
+            Prosthesis is encoded 'hemi': 1, 'reverse': 2, 'anatomical': 3\n
+            Indication is encoded 'acute fracture': 0, 'fraktur sequelae': 1, 'osteoarthritis': 2, 'cuff damage': 4\n
             """
 
 external_stylesheets = ["https://gist.githubusercontent.com/ZachSaucier/8295d9dc926d7064ff0d4f3f04b35b55/raw/06a8cc03bbdbb7e36f7ae192f834226320f752cd/dark-theme.css"]
@@ -83,6 +81,8 @@ def render_output(age, sex, prosthesis, indication, comcard, comdia, comren, com
     if age is None:
         return f"Please enter age"
     
+    sex = encode_sex(sex)
+
     return f"Age is {age},\nsex is {sex},\nprosthesis is {prosthesis}, \nindication is {indication}, \ncardiac co-morbidity is {comcard}, \ndiabetic co-mobidity is {comdia}, \nrenal co-morbidity is {comren}, \nneuronal co-morbidity is {comneu}"
 
 # @callback(
