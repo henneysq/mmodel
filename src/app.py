@@ -42,7 +42,7 @@ EXTERNAL_STYLESHEETS = [
 
 LR_INDENT = (200, 200)
 
-app = Dash(__name__, external_stylesheets=[dbc.themes.MORPH])# external_stylesheets=EXTERNAL_STYLESHEETS)
+app = Dash(__name__, external_stylesheets=[dbc.themes.MINTY])# external_stylesheets=EXTERNAL_STYLESHEETS)
 
 # Declare server for Heroku deployment. Needed for Procfile.
 server = app.server
