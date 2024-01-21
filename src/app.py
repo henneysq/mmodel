@@ -41,10 +41,8 @@ hidden_div = html.Div(id="hidden-div", style={"display": "none"})
 
 app.layout = html.Div(
     [
-        
-        dcc.Markdown(welcome_msg, mathjax=True)
-        
-        html.H6("Change the values of factors to calculate the risk of something!"),
+        dcc.Markdown(welcome_msg, mathjax=True),
+        html.H4("Change the values of factors to calculate the risk of something!"),
         html.Div([
             "Age: ",
             dcc.Input(id="age", type="number", placeholder="Age"),
@@ -88,9 +86,11 @@ app.layout = html.Div(
         html.Div(id="number-out"),
         dcc.Markdown(
             """
-            Made by [Mark Alexander Henney](https://orcid.org/0000-0002-4343-1068), based on.. 
-            by [Markos](),
-            and implemented with [Dash]() - see the [github repo](https://github.com/henneysq/mmodel/tree/master)
+            Made by [Mark Alexander Henney](https://orcid.org/0000-0002-4343-1068),
+            
+            Based on.. by [Markos](),
+
+            Implemented with [Dash](https://dash.plotly.com/) - see the [github repo](https://github.com/henneysq/mmodel/tree/master)
             """),
         
         dcc.Markdown('''
@@ -106,7 +106,6 @@ app.layout = html.Div(
             This example uses the inline delimiter:
             $E^2=m^2c^4+p^2c^2$
             ''', mathjax=True)
-        
     ]
 )
 
