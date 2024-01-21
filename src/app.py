@@ -40,14 +40,15 @@ EXTERNAL_STYLESHEETS = [
     "https://raw.githubusercontent.com/kevquirk/simple.css/main/simple-v1.css"
 ]
 
-app = Dash(__name__, external_stylesheets=[dbc.themes.VAPOR])# external_stylesheets=EXTERNAL_STYLESHEETS)
+app = Dash(__name__, external_stylesheets=[dbc.themes.MORPH])# external_stylesheets=EXTERNAL_STYLESHEETS)
 
 # Declare server for Heroku deployment. Needed for Procfile.
 server = app.server
 hidden_div = html.Div(id="hidden-div", style={"display": "none"})
 
 app.layout = html.Div(
-    [
+    style={'margin-left': "7px", "margin-top":"7px"},
+    children=[
         dcc.Markdown(WELCOME_MSG, mathjax=True),
         html.H4("Change the values of factors to calculate the risk of something!"),
         html.Div([
