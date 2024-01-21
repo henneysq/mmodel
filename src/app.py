@@ -8,10 +8,12 @@ WELCOME_MSG = """
     Hi Markos! Congratulations on becoming a dad!
 
     Here's an ugly and incomplete rendition of your beautiful model. It's in progress..
+
+    See [Background Information](#background-information) for model details.
     """
 
 BACKGROUND_MSG = """
-    # Background Information
+    # Background Information 
 
     This tool implements the prediction model for risk of serious adverse events
     
@@ -40,7 +42,7 @@ EXTERNAL_STYLESHEETS = [
     "https://raw.githubusercontent.com/kevquirk/simple.css/main/simple-v1.css"
 ]
 
-LR_INDENT = (500, 500)
+LR_INDENT = (800, 800)
 
 app = Dash(__name__, external_stylesheets=[dbc.themes.CERULEAN])# external_stylesheets=EXTERNAL_STYLESHEETS)
 
@@ -93,6 +95,8 @@ app.layout = html.Div(
         html.Div(dcc.Markdown(id="number-out")),
         dcc.Markdown(
             """
+            ## Site Information
+
             Based on.. by [Markos](),
             
             Made by [Mark Alexander Henney](https://orcid.org/0000-0002-4343-1068),
@@ -133,7 +137,7 @@ def render_output(age, sex, prosthesis, indication, comcard, comdia, comren, com
 
     #return f"Risk is {risk}% based on age: {age},\nsex: {sex},\nprosthesis: {prosthesis}, \nindication: {indication}, \ncardiac co-morbidity: {comcard}, \ndiabetic co-mobidity: {comdia}, \nrenal co-morbidity: {comren}, \nneuronal co-morbidity: {comneu}"
     return f"""
-        {risk:.2f}% risk of serious adverse event(s) within [...] days of surgey.
+        ## {risk:.2f}% risk of serious adverse event(s) within [...] days of surgey.
     """
 
 def encode_sex(sex: str) -> int:
