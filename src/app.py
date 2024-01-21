@@ -44,7 +44,7 @@ EXTERNAL_STYLESHEETS = [
 
 LR_INDENT = (600, 600)
 
-app = Dash(__name__, external_stylesheets=[dbc.themes.CERULEAN])# external_stylesheets=EXTERNAL_STYLESHEETS)
+app = Dash(__name__, external_stylesheets=[dbc.themes.DARKLY])# external_stylesheets=EXTERNAL_STYLESHEETS)
 
 # Declare server for Heroku deployment. Needed for Procfile.
 server = app.server
@@ -93,6 +93,7 @@ app.layout = html.Div(
 
         html.Hr(),
         html.Div(dcc.Markdown(id="number-out")),
+        dcc.Markdown(BACKGROUND_MSG, mathjax=True),
         dcc.Markdown(
             """
             ## Site Information
@@ -103,7 +104,6 @@ app.layout = html.Div(
 
             Find the project on the [github repo](https://github.com/henneysq/mmodel/tree/master).
             """),
-        dcc.Markdown(BACKGROUND_MSG, mathjax=True),
     ]
 )
 
@@ -120,7 +120,7 @@ app.layout = html.Div(
 )
 def render_output(age, sex, prosthesis, indication, comcard, comdia, comren, comneu):
     if age is None:
-        return f"### Please enter age"
+        return f"#### Please enter age"
     
     try:
         sex = encode_sex(sex)
@@ -137,7 +137,7 @@ def render_output(age, sex, prosthesis, indication, comcard, comdia, comren, com
 
     #return f"Risk is {risk}% based on age: {age},\nsex: {sex},\nprosthesis: {prosthesis}, \nindication: {indication}, \ncardiac co-morbidity: {comcard}, \ndiabetic co-mobidity: {comdia}, \nrenal co-morbidity: {comren}, \nneuronal co-morbidity: {comneu}"
     return f"""
-        ### {risk:.2f}% risk of serious adverse event(s) within [...] days of surgey.
+        #### {risk:.2f}% risk of serious adverse event(s) within [...] days of surgey.
     """
 
 def encode_sex(sex: str) -> int:
