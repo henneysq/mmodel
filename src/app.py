@@ -67,6 +67,22 @@ app.layout = html.Div(
         # ),
         html.Hr(),
         html.Div(id="number-out"),
+        html.H6("Made by Mark Alexander Henney (), based on.. by , and implemented on (https://github.com/henneysq/mmodel/tree/master)"),
+        
+        dcc.Markdown('''
+            ## Model Definition
+
+            This example uses the block delimiter:
+            $$
+            \\frac{1}{(\\sqrt{\\phi \\sqrt{5}}-\\phi) e^{\\frac25 \\pi}} =
+            1+\\frac{e^{-2\\pi}} {1+\\frac{e^{-4\\pi}} {1+\\frac{e^{-6\\pi}}
+            {1+\\frac{e^{-8\\pi}} {1+\\ldots} } } }
+            $$
+
+            This example uses the inline delimiter:
+            $E^2=m^2c^4+p^2c^2$
+            ''', mathjax=True)
+        
     ]
 )
 
@@ -99,22 +115,6 @@ def render_output(age, sex, prosthesis, indication, comcard, comdia, comren, com
         return str(e)
 
     return f"Risk is {risk}% based on age: {age},\nsex: {sex},\nprosthesis: {prosthesis}, \nindication: {indication}, \ncardiac co-morbidity: {comcard}, \ndiabetic co-mobidity: {comdia}, \nrenal co-morbidity: {comren}, \nneuronal co-morbidity: {comneu}"
-
-# @callback(
-#     Output("number-out", "children"),
-#     Input("age", "value"),
-#     Input("sex", "value"),
-#     Input("prothesis", "value"),
-#     Input("indication", "value"),
-# )
-# def number_render(age, sex, prothesis, indication):
-#     return f"sex: {sex}, age: {age}"
-#     sex = encode_sex(sex=sex)
-#     prothesis = encode_prosthesis(prothesis=prothesis)
-#     indication = encode_indication(indication)
-#     indication = encode_indication(indication)
-#     risk = 0.03*sex + 0.1*age + 0.01*prothesis
-#     return f"risk of something: {risk*100}%"
 
 def encode_sex(sex: str) -> int:
     sex_map = {
@@ -150,94 +150,3 @@ def encode_comorb(comorb: str) -> int:
 if __name__ == "__main__":
     app.run(debug=True)
 
-
-
-# '''
-#  # @ Create Time: 2024-01-21 14:22:40.066094
-# '''
-
-
-# from dash import Dash, html, dcc, Input, Output, ClientsideFunction
-# import dash_bootstrap_components as dbc
-# from components.navbar import navbar
-# from components.footer import footer
-# from containers.home import home_page
-# from containers.about import about_page
-# from containers.error import error_page
-
-
-# # global app definition
-# app = Dash(
-#     __name__,
-#     external_stylesheets=[dbc.themes.FLATLY],
-#     external_scripts=[
-#         "https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"],
-#     title="MarkosRiskModel",
-#     update_title=None,
-#     prevent_initial_callbacks=True,
-#     suppress_callback_exceptions=True,
-# )
-
-
-# # Declare server for Heroku deployment. Needed for Procfile.
-# server = app.server
-
-# hidden_div = html.Div(id="hidden-div", style={"display": "none"})
-
-# @app.callback(Output("page-content", "children"), [Input("url", "pathname")])
-# def render_page_content(pathname: str):
-#     """Generate the page content based on the pathname"""
-
-#     # Upload Page
-#     if pathname == "/home" or pathname == "/":
-#         return html.Div(
-#             [
-#                 hidden_div,
-#                 navbar(),
-#                 home_page(app),
-#                 footer()],
-#             style={"backgroundColor": "#fff"})
-
-#     # About Page
-#     elif pathname == "/about":
-#         return html.Div(
-#             [
-#                 navbar(),
-#                 about_page(app),
-#                 footer()],
-#             style={"backgroundColor": "#fff"})
-
-#     # Error Page
-#     else:
-#         return html.Div(
-#             [
-#                 navbar(),
-#                 error_page(pathname),
-#                 footer()],
-#             style={"backgroundColor": "#202124"})
-
-
-
-# # Confetti animation on button click
-# app.clientside_callback(
-#     ClientsideFunction(namespace="my_clientside_library",
-#                        function_name="confetti_onclick"),
-#     Output("hidden-div", "children"),
-#     Input("send-call-button", "n_clicks"),
-# )
-
-
-# app.layout = html.Div([
-#     # represents the URL bar, doesn't render anything
-#     dcc.Location(id='url', refresh=False),
-
-#     # content will be rendered in this element
-#     html.Div(id='page-content',
-#              style={"backgroundColor": "#202124"}
-#              ),
-
-# ], style={"position": "relative", "minHeight": "100vh", 'backgroundColor': '#202124'})
-
-
-# if __name__ == '__main__':
-#     app.run_server(debug=True, threaded=True)
