@@ -21,7 +21,7 @@ hidden_div = html.Div(id="hidden-div", style={"display": "none"})
 app.layout = html.Div(
     [
         html.H6(welcome_msg),
-        html.H6("Change the value in the to calculate the risk of something!"),
+        html.H6("Change the values of factors to calculate the risk of something!"),
         html.Div([
             "Age: ",
             dcc.Input(id="age", type="number", placeholder="Age"),
@@ -83,13 +83,13 @@ def render_output(age, sex, prosthesis, indication, comcard, comdia, comren, com
     
     try:
         sex = encode_sex(sex)
-        prothesis = encode_prosthesis(prothesis=prothesis)
+        prosthesis = encode_prosthesis(prothesis=prosthesis)
         indication = encode_indication(indication)
         comcard = encode_comorb(comcard)
         comdia = encode_comorb(comdia)
         comren = encode_comorb(comren)
         comneu = encode_comorb(comneu)
-        risk = 0.01*age + 0.01*sex + 0.01*prothesis + 0.01*indication + 0.01*comcard + 0.01*comdia + 0.01*comren + 0.01*comneu
+        risk = 0.01*age + 0.01*sex + 0.01*prosthesis + 0.01*indication + 0.01*comcard + 0.01*comdia + 0.01*comren + 0.01*comneu
         risk = risk * 100
     except Exception as e:
         return str(e)
