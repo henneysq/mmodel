@@ -12,8 +12,8 @@ hidden_div = html.Div(id="hidden-div", style={"display": "none"})
 
 app.layout = html.Div(
     [
-        dcc.Input(id="age", type="number", placeholder="Debounce True"),
-        html.Hr(),
+        dcc.Input(id="age", type="number", placeholder="Age"),
+        # html.Hr(),
         dcc.Dropdown(['male', 'female'], 'male', id='sex'),
         dcc.Dropdown(['hemi', 'reverse', 'anatomical'], 'hemi', id='prosthesis'),
         dcc.Dropdown(['acute fracture', 'fraktur sequelae',
@@ -35,10 +35,12 @@ app.layout = html.Div(
     Input("prothesis", "value"),
     Input("indication", "value"),
 )
-def number_render(age, sex, prothesis, indication):
-    sex = encode_sex(sex=sex)
-    prothesis = encode_prosthesis(prothesis=prothesis)
-    risk = 0.03*sex + 0.1*age + 0.01*prothesis
+def number_render(fval, tval, rangeval):
+# def number_render(age, sex, prothesis, indication):
+    #sex = encode_sex(sex=sex)
+    #prothesis = encode_prosthesis(prothesis=prothesis)
+    #risk = 0.03*sex + 0.1*age + 0.01*prothesis
+    risk = 0.24
     return f"risk of something: {risk*100}%"
 
 def encode_sex(sex: str) -> int:
