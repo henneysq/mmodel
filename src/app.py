@@ -81,9 +81,20 @@ def render_output(age, sex, prosthesis, indication, comcard, comdia, comren, com
     if age is None:
         return f"Please enter age"
     
-    sex = encode_sex(sex)
+    try:
+        sex = encode_sex(sex)
+        prothesis = encode_prosthesis(prothesis=prothesis)
+        indication = encode_indication(indication)
+        comcard = encode_comorb(comcard)
+        comdia = encode_comorb(comdia)
+        comren = encode_comorb(comren)
+        comneu = encode_comorb(comneu)
+        risk = 0.01*age + 0.01*sex + 0.01*prothesis + 0.01*indication + 0.01*comcard + 0.01*comdia + 0.01*comren + 0.01*comneu
+        risk = risk * 100
+    except Exception as e:
+        return str(e)
 
-    return f"Age is {age},\nsex is {sex},\nprosthesis is {prosthesis}, \nindication is {indication}, \ncardiac co-morbidity is {comcard}, \ndiabetic co-mobidity is {comdia}, \nrenal co-morbidity is {comren}, \nneuronal co-morbidity is {comneu}"
+    return f"Risk is {risk}% based on age: {age},\nsex: {sex},\nprosthesis: {prosthesis}, \nindication: {indication}, \ncardiac co-morbidity: {comcard}, \ndiabetic co-mobidity: {comdia}, \nrenal co-morbidity: {comren}, \nneuronal co-morbidity: {comneu}"
 
 # @callback(
 #     Output("number-out", "children"),
