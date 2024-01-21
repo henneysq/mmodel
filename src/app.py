@@ -1,4 +1,4 @@
-
+import dash
 from dash import Dash, dcc, html, Input, Output, callback
 import dash_bootstrap_components as dbc
 
@@ -38,64 +38,7 @@ BACKGROUND_MSG = """
     Indication is encoded `'acute fracture': 0, 'fraktur sequelae': 1, 'osteoarthritis': 2, 'cuff damage': 4`
 """
 
-EXTERNAL_STYLESHEETS = [
-    "https://raw.githubusercontent.com/kevquirk/simple.css/main/simple-v1.css"
-]
-
-LR_INDENT = (600, 600)
-
-app = Dash(__name__, external_stylesheets=[dbc.themes.DARKLY])# external_stylesheets=EXTERNAL_STYLESHEETS)
-
-# Declare server for Heroku deployment. Needed for Procfile.
-server = app.server
-hidden_div = html.Div(id="hidden-div", style={"display": "none"})
-
-
-app.layout = html.Div(
-    style={'margin-left': f"{LR_INDENT[0]}px", 'margin-right': f"{LR_INDENT[1]}px", "margin-top":"7px"},
-    children=[
-        dcc.Markdown(WELCOME_MSG, mathjax=True),
-        html.H4("Change the values of factors to calculate the risk of something!"),
-        html.Div([
-            "Age: ",
-            dcc.Input(id="age", type="number", placeholder="Age"),
-        ]),
-        html.Div([
-            "Sex: ",
-            dcc.Dropdown(['male', 'female'], 'male', id='sex'),
-        ]),
-        html.Div([
-            "Prosthesis: ",
-            dcc.Dropdown(['hemi', 'reverse', 'anatomical'], 'hemi', id='prosthesis'),
-        ]),
-        html.Div([
-            "Indication: ",
-            dcc.Dropdown(['acute fracture', 'fraktur sequelae',
-                      'osteoarthritis', 'cuff damage'], 'acute fracture', id='indication'),
-        ]),
-        # html.Hr(),
-        html.Div([
-            "Cardiac co-morbidity: ",
-            dcc.Dropdown(['yes', 'no'], 'no', id='comorb-cardiac'),
-        ]),
-        html.Div([
-            "Diabetic co-morbidity: ",
-            dcc.Dropdown(['yes', 'no'], 'no', id='comorb-diabetic'),
-        ]),
-        html.Div([
-            "Renal co-morbidity: ",
-            dcc.Dropdown(['yes', 'no'], 'no', id='comorb-renal'),
-        ]),
-        html.Div([
-            "Neurological co-morbidity: ",
-            dcc.Dropdown(['yes', 'no'], 'no', id='comorb-neuronal'),
-        ]),
-
-        html.Hr(),
-        html.Div(dcc.Markdown(id="number-out")),
-        dcc.Markdown(BACKGROUND_MSG, mathjax=True),
-        dcc.Markdown(
-            """
+SITE_INFO = """
             ## Site Information
 
             Based on.. by [Markos](),
@@ -103,73 +46,73 @@ app.layout = html.Div(
             Made by [Mark Alexander Henney](https://orcid.org/0000-0002-4343-1068),
 
             Find the project on the [github repo](https://github.com/henneysq/mmodel/tree/master).
-            """),
-    ]
+            """
+
+EXTERNAL_STYLESHEETS = [
+    "https://raw.githubusercontent.com/kevquirk/simple.css/main/simple-v1.css"
+]
+
+# the style arguments for the sidebar. We use position:fixed and a fixed width
+SIDEBAR_STYLE = {
+    "position": "fixed",
+    "top": 0,
+    "left": 0,
+    "bottom": 0,
+    "width": "16rem",
+    "padding": "2rem 1rem",
+    "background-color": "#f8f9fa",
+}
+
+
+app = Dash(__name__, external_stylesheets=[dbc.themes.DARKLY], use_pages=True)# external_stylesheets=EXTERNAL_STYLESHEETS)
+
+# Declare server for Heroku deployment. Needed for Procfile.
+server = app.server
+hidden_div = html.Div(id="hidden-div", style={"display": "none"})
+
+sidebar = html.Div(
+    [
+        html.H2("Content", className="display-4"),
+        html.Hr(),
+        html.P(
+            "Risk of adverse events after shoulder arthoplasty", className="lead"
+        ),
+        dbc.Nav(
+            [
+                dbc.NavLink("Home", href="/", active="exact"),
+                dbc.NavLink("Background Information", href="/background-information", active="exact"),
+                dbc.NavLink("Creators", href="/creators", active="exact"),
+            ],
+            vertical=True,
+            pills=True,
+        ),
+    ],
+    style=SIDEBAR_STYLE,
 )
 
-@callback(
-        Output(component_id="number-out", component_property="children"),
-        Input(component_id="age", component_property="value"),
-        Input(component_id="sex", component_property="value"),
-        Input(component_id="prosthesis", component_property="value"),
-        Input(component_id="indication", component_property="value"),
-        Input(component_id="comorb-cardiac", component_property="value"),
-        Input(component_id="comorb-diabetic", component_property="value"),
-        Input(component_id="comorb-renal", component_property="value"),
-        Input(component_id="comorb-neuronal", component_property="value"),
-)
-def render_output(age, sex, prosthesis, indication, comcard, comdia, comren, comneu):
-    if age is None:
-        return f"#### Please enter age"
-    
-    try:
-        sex = encode_sex(sex)
-        prosthesis = encode_prosthesis(prosthesis)
-        indication = encode_indication(indication)
-        comcard = encode_comorb(comcard)
-        comdia = encode_comorb(comdia)
-        comren = encode_comorb(comren)
-        comneu = encode_comorb(comneu)
-        risk = 0.1 + 0.01*age + 0.01*sex + 0.01*prosthesis + 0.01*indication + 0.01*comcard + 0.01*comdia + 0.01*comren + 0.01*comneu
-        risk = risk * 100
-    except Exception as e:
-        return str(e)
 
-    #return f"Risk is {risk}% based on age: {age},\nsex: {sex},\nprosthesis: {prosthesis}, \nindication: {indication}, \ncardiac co-morbidity: {comcard}, \ndiabetic co-mobidity: {comdia}, \nrenal co-morbidity: {comren}, \nneuronal co-morbidity: {comneu}"
-    return f"""
-        #### {risk:.2f}% risk of serious adverse event(s) within [...] days of surgey.
-    """
+# content = html.Div(id="page-content")
 
-def encode_sex(sex: str) -> int:
-    sex_map = {
-        "male": 1,
-        "female": 2
-    }
-    return sex_map[sex]
+app.layout = html.Div([dcc.Location(id="url"), sidebar, dash.page_container])
 
-def encode_prosthesis(prosthesis: str) -> int:
-    prosthesis_map = {
-        'hemi': 1,
-        'reverse': 2,
-        'anatomical': 3
-    }
-    return prosthesis_map[prosthesis]
 
-def encode_indication(indication: str) -> int:
-    indication_map = {
-        'acute fracture': 0,
-        'fraktur sequelae': 1,
-        'osteoarthritis': 2,
-        'cuff damage': 4     
-    }
-    return indication_map[indication]
-
-def encode_comorb(comorb: str) -> int:
-    comorb_map = {
-        "yes": 1,
-        "no": 0
-    }
-    return comorb_map[comorb]
+# @app.callback(Output("page-content", "children"), [Input("url", "pathname")])
+# def render_page_content(pathname):
+#     if pathname == "/":
+#         return html.P("This is the content of the home page!")
+#     elif pathname == "/page-1":
+#         return html.P("This is the content of page 1. Yay!")
+#     elif pathname == "/page-2":
+#         return html.P("Oh cool, this is page 2!")
+#     # If the user tries to reach a different page, return a 404 message
+#     return html.Div(
+#         [
+#             html.H1("404: Not found", className="text-danger"),
+#             html.Hr(),
+#             html.P(f"The pathname {pathname} was not recognised..."),
+#         ],
+#         className="p-3 bg-light rounded-3",
+#     )
 
 if __name__ == "__main__":
     app.run(debug=True)
