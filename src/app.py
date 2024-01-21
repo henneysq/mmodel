@@ -100,7 +100,7 @@ app.layout = html.Div(
             
             Made by [Mark Alexander Henney](https://orcid.org/0000-0002-4343-1068),
 
-            Implemented with [Dash](https://dash.plotly.com/) - see the [github repo](https://github.com/henneysq/mmodel/tree/master)
+            Find the project on the [github repo](https://github.com/henneysq/mmodel/tree/master).
             """),
         dcc.Markdown(BACKGROUND_MSG, mathjax=True),
     ]
@@ -136,7 +136,7 @@ def render_output(age, sex, prosthesis, indication, comcard, comdia, comren, com
 
     #return f"Risk is {risk}% based on age: {age},\nsex: {sex},\nprosthesis: {prosthesis}, \nindication: {indication}, \ncardiac co-morbidity: {comcard}, \ndiabetic co-mobidity: {comdia}, \nrenal co-morbidity: {comren}, \nneuronal co-morbidity: {comneu}"
     return f"""
-        {risk}% risk of serious adverse event(s) within [...] days of surgey.
+        {risk:.2f}% risk of serious adverse event(s) within [...] days of surgey.
     """
 
 def encode_sex(sex: str) -> int:
