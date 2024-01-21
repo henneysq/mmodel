@@ -36,13 +36,7 @@ BACKGROUND_MSG = """
 """
 
 EXTERNAL_STYLESHEETS = [
-    'https://codepen.io/chriddyp/pen/bWLwgP.css',
-    {
-        'href': 'https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css',
-        'rel': 'stylesheet',
-        'integrity': 'sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO',
-        'crossorigin': 'anonymous'
-    }
+    "https://raw.githubusercontent.com/kevquirk/simple.css/main/simple-v1.css"
 ]
 
 app = Dash(__name__, external_stylesheets=EXTERNAL_STYLESHEETS)# external_stylesheets=EXTERNAL_STYLESHEETS)
