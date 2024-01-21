@@ -42,7 +42,7 @@ EXTERNAL_STYLESHEETS = [
     "https://raw.githubusercontent.com/kevquirk/simple.css/main/simple-v1.css"
 ]
 
-LR_INDENT = (800, 800)
+LR_INDENT = (600, 600)
 
 app = Dash(__name__, external_stylesheets=[dbc.themes.CERULEAN])# external_stylesheets=EXTERNAL_STYLESHEETS)
 
@@ -120,7 +120,7 @@ app.layout = html.Div(
 )
 def render_output(age, sex, prosthesis, indication, comcard, comdia, comren, comneu):
     if age is None:
-        return f"Please enter age"
+        return f"### Please enter age"
     
     try:
         sex = encode_sex(sex)
@@ -137,7 +137,7 @@ def render_output(age, sex, prosthesis, indication, comcard, comdia, comren, com
 
     #return f"Risk is {risk}% based on age: {age},\nsex: {sex},\nprosthesis: {prosthesis}, \nindication: {indication}, \ncardiac co-morbidity: {comcard}, \ndiabetic co-mobidity: {comdia}, \nrenal co-morbidity: {comren}, \nneuronal co-morbidity: {comneu}"
     return f"""
-        ## {risk:.2f}% risk of serious adverse event(s) within [...] days of surgey.
+        ### {risk:.2f}% risk of serious adverse event(s) within [...] days of surgey.
     """
 
 def encode_sex(sex: str) -> int:
