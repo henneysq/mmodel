@@ -52,7 +52,7 @@ sidebar = html.Div(
         ),
         dbc.Nav(
             [
-                dbc.NavLink("Home", href="/home", active="exact"),
+                dbc.NavLink("Home", href="/", active="exact"),
                 dbc.NavLink("Background Information", href="/background-information", active="exact"),
                 dbc.NavLink("Creators", href="/creators", active="exact"),
             ],
