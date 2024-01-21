@@ -19,7 +19,12 @@ hidden_div = html.Div(id="hidden-div", style={"display": "none"})
 
 app.layout = html.Div(
     [
-        [html.H6(msg) for msg in welcome_msg],
+        html.H6(welcome_msg[0]),
+        html.H6(welcome_msg[1]),
+        html.H6(welcome_msg[2]),
+        html.H6(welcome_msg[3]),
+        html.H6(welcome_msg[4]),
+        html.H6(welcome_msg[5]),
         html.H6("Change the values of factors to calculate the risk of something!"),
         html.Div([
             "Age: ",
