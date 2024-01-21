@@ -45,7 +45,9 @@ EXTERNAL_STYLESHEETS = [
     }
 ]
 
-app = Dash(__name__, external_stylesheets=EXTERNAL_STYLESHEETS)
+style = "src\styles.css"
+
+app = Dash(__name__, external_stylesheets=style)# external_stylesheets=EXTERNAL_STYLESHEETS)
 
 # Declare server for Heroku deployment. Needed for Procfile.
 server = app.server
@@ -91,7 +93,7 @@ app.layout = html.Div(
         ]),
 
         html.Hr(),
-        html.Div(id="number-out"),
+        html.Div(dcc.Markdown(id="number-out")),
         dcc.Markdown(
             """
             Based on.. by [Markos](),
@@ -134,7 +136,7 @@ def render_output(age, sex, prosthesis, indication, comcard, comdia, comren, com
 
     #return f"Risk is {risk}% based on age: {age},\nsex: {sex},\nprosthesis: {prosthesis}, \nindication: {indication}, \ncardiac co-morbidity: {comcard}, \ndiabetic co-mobidity: {comdia}, \nrenal co-morbidity: {comren}, \nneuronal co-morbidity: {comneu}"
     risk_display = """
-
+        {}% risk of serious adverse event(s) within [...] days of surgey.
     """
 
 def encode_sex(sex: str) -> int:
