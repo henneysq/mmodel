@@ -47,7 +47,7 @@ server = app.server
 hidden_div = html.Div(id="hidden-div", style={"display": "none"})
 
 app.layout = html.Div(
-    style={'margin-left': "7px", "margin-top":"7px"},
+    style={'margin-left': "30px", 'margin-right': "30px", "margin-top":"7px"},
     children=[
         dcc.Markdown(WELCOME_MSG, mathjax=True),
         html.H4("Change the values of factors to calculate the risk of something!"),
