@@ -40,14 +40,17 @@ EXTERNAL_STYLESHEETS = [
     "https://raw.githubusercontent.com/kevquirk/simple.css/main/simple-v1.css"
 ]
 
+LR_INDENT = (200, 200)
+
 app = Dash(__name__, external_stylesheets=[dbc.themes.MORPH])# external_stylesheets=EXTERNAL_STYLESHEETS)
 
 # Declare server for Heroku deployment. Needed for Procfile.
 server = app.server
 hidden_div = html.Div(id="hidden-div", style={"display": "none"})
 
+
 app.layout = html.Div(
-    style={'margin-left': "30px", 'margin-right': "30px", "margin-top":"7px"},
+    style={'margin-left': f"{LR_INDENT[0]}px", 'margin-right': f"{LR_INDENT[1]}px", "margin-top":"7px"},
     children=[
         dcc.Markdown(WELCOME_MSG, mathjax=True),
         html.H4("Change the values of factors to calculate the risk of something!"),
