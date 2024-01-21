@@ -1,14 +1,13 @@
 
 from dash import Dash, dcc, html, Input, Output, callback
 
-welcome_msg = """ Hi Markos! Congratulations on becoming a dad!\n
-            Here's an ugly and incomplete rendition of your beautiful model. It's in progress..\n
-            \n
-            Currently, all parameter weights are 0.01, and the off-set is 0.1.\n
-            Sex is encoded 'male': 1, 'female': 2\n
-            Prosthesis is encoded 'hemi': 1, 'reverse': 2, 'anatomical': 3\n
-            Indication is encoded 'acute fracture': 0, 'fraktur sequelae': 1, 'osteoarthritis': 2, 'cuff damage': 4\n
-            """
+welcome_msg = ("Hi Markos! Congratulations on becoming a dad!",
+                "Here's an ugly and incomplete rendition of your beautiful model. It's in progress..",
+                "Currently, all parameter weights are 0.01, and the off-set is 0.1.",
+                "Sex is encoded 'male': 1, 'female': 2",
+                "Prosthesis is encoded 'hemi': 1, 'reverse': 2, 'anatomical': 3",
+                "Indication is encoded 'acute fracture': 0, 'fraktur sequelae': 1, 'osteoarthritis': 2, 'cuff damage': 4"
+)
 
 external_stylesheets = ["https://gist.githubusercontent.com/ZachSaucier/8295d9dc926d7064ff0d4f3f04b35b55/raw/06a8cc03bbdbb7e36f7ae192f834226320f752cd/dark-theme.css"]
 
@@ -20,7 +19,7 @@ hidden_div = html.Div(id="hidden-div", style={"display": "none"})
 
 app.layout = html.Div(
     [
-        html.H6(welcome_msg),
+        [html.H6(msg) for msg in welcome_msg],
         html.H6("Change the values of factors to calculate the risk of something!"),
         html.Div([
             "Age: ",
@@ -141,6 +140,7 @@ def encode_comorb(comorb: str) -> int:
         "yes": 1,
         "no": 0
     }
+    return comorb_map[comorb]
 
 if __name__ == "__main__":
     app.run(debug=True)
