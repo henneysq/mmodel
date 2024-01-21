@@ -1,15 +1,37 @@
 
 from dash import Dash, dcc, html, Input, Output, callback
 
-welcome_msg = ("Hi Markos! Congratulations on becoming a dad!",
-                "Here's an ugly and incomplete rendition of your beautiful model. It's in progress..",
-                "Currently, all parameter weights are 0.01, and the off-set is 0.1.",
-                "Sex is encoded 'male': 1, 'female': 2",
-                "Prosthesis is encoded 'hemi': 1, 'reverse': 2, 'anatomical': 3",
-                "Indication is encoded 'acute fracture': 0, 'fraktur sequelae': 1, 'osteoarthritis': 2, 'cuff damage': 4"
-)
+welcome_msg = """
+    # Markos' Risk Prediction Model
 
-external_stylesheets = ["https://gist.githubusercontent.com/ZachSaucier/8295d9dc926d7064ff0d4f3f04b35b55/raw/06a8cc03bbdbb7e36f7ae192f834226320f752cd/dark-theme.css"]
+    Hi Markos! Congratulations on becoming a dad!
+
+    Here's an ugly and incomplete rendition of your beautiful model. It's in progress..
+
+    ## Background Information
+
+    This tool implements the prediction model for risk of serious adverse events
+    
+    ## Model Definition
+
+    Currently, all parameter weights are 0.01, and the off-set is 0.1.
+
+    Sex is encoded 'male': 1, 'female': 2
+
+    Prosthesis is encoded `'hemi': 1, 'reverse': 2, 'anatomical': 3`
+
+    Indication is encoded 'acute fracture': 0, 'fraktur sequelae': 1, 'osteoarthritis': 2, 'cuff damage': 4
+"""
+
+external_stylesheets = [
+    'https://codepen.io/chriddyp/pen/bWLwgP.css',
+    {
+        'href': 'https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css',
+        'rel': 'stylesheet',
+        'integrity': 'sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO',
+        'crossorigin': 'anonymous'
+    }
+]
 
 app = Dash(__name__, external_stylesheets=external_stylesheets)
 
@@ -19,12 +41,9 @@ hidden_div = html.Div(id="hidden-div", style={"display": "none"})
 
 app.layout = html.Div(
     [
-        html.H6(welcome_msg[0]),
-        html.H6(welcome_msg[1]),
-        html.H6(welcome_msg[2]),
-        html.H6(welcome_msg[3]),
-        html.H6(welcome_msg[4]),
-        html.H6(welcome_msg[5]),
+        
+        dcc.Markdown(welcome_msg, mathjax=True)
+        
         html.H6("Change the values of factors to calculate the risk of something!"),
         html.Div([
             "Age: ",
@@ -67,7 +86,12 @@ app.layout = html.Div(
         # ),
         html.Hr(),
         html.Div(id="number-out"),
-        html.H6("Made by Mark Alexander Henney (), based on.. by , and implemented on (https://github.com/henneysq/mmodel/tree/master)"),
+        dcc.Markdown(
+            """
+            Made by [Mark Alexander Henney](https://orcid.org/0000-0002-4343-1068), based on.. 
+            by [Markos](),
+            and implemented with [Dash]() - see the [github repo](https://github.com/henneysq/mmodel/tree/master)
+            """),
         
         dcc.Markdown('''
             ## Model Definition
