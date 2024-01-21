@@ -40,12 +40,12 @@ EXTERNAL_STYLESHEETS = [
     "https://raw.githubusercontent.com/kevquirk/simple.css/main/simple-v1.css"
 ]
 
-LR_INDENT = (200, 200)
+LR_INDENT = (500, 500)
 
-app = Dash(__name__, external_stylesheets=[dbc.themes.MINTY])# external_stylesheets=EXTERNAL_STYLESHEETS)
+app = Dash(__name__, external_stylesheets=[dbc.themes.CERULEAN])# external_stylesheets=EXTERNAL_STYLESHEETS)
 
 # Declare server for Heroku deployment. Needed for Procfile.
-server = app.server
+#server = app.server
 hidden_div = html.Div(id="hidden-div", style={"display": "none"})
 
 
