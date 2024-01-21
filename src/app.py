@@ -1,6 +1,8 @@
 
 from dash import Dash, dcc, html, Input, Output, callback
 
+external_stylesheets = ["https://codepen.io/chriddyp/pen/bWLwgP.css"]
+
 app = Dash(__name__)
 
 # Declare server for Heroku deployment. Needed for Procfile.
@@ -10,15 +12,16 @@ hidden_div = html.Div(id="hidden-div", style={"display": "none"})
 
 app.layout = html.Div(
     [
-        dcc.Input(id="dfalse", type="number", placeholder="Debounce False"),
-        dcc.Input(
-            id="dtrue", type="number",
-            debounce=True, placeholder="Debounce True",
-        ),
-        dcc.Input(
-            id="input_range_2", type="number", placeholder="input with range",
-            min=10, max=100, step=3,
-        ),
+        dcc.Input(id="age", type="number", placeholder="Debounce True"),
+        html.Hr(),
+        dcc.Dropdown(['male', 'female'], 'male', id='sex'),
+        dcc.Dropdown(['hemi', 'reverse', 'anatomical'], 'hemi', id='prosthesis'),
+        dcc.Dropdown(['acute fracture', 'fraktur sequelae',
+                      'osteoarthritis', 'cuff damage'], 'acute fracture', id='indication'),
+        # dcc.Input(
+        #     id="dtrue", type="number",
+        #     debounce=True, placeholder="Debounce True",
+        # ),
         html.Hr(),
         html.Div(id="number-out"),
     ]
@@ -27,13 +30,31 @@ app.layout = html.Div(
 
 @callback(
     Output("number-out", "children"),
-    Input("dfalse", "value"),
-    Input("dtrue", "value"),
-    Input("input_range_2", "value"),
+    Input("age", "value"),
+    Input("sex", "value"),
+    Input("prothesis", "value"),
+    Input("indication", "value"),
 )
-def number_render(fval, tval, rangeval):
-    return "dfalse: {}, dtrue: {}, range: {}".format(fval, tval, rangeval)
+def number_render(age, sex, prothesis, indication):
+    sex = encode_sex(sex=sex)
+    prothesis = encode_prosthesis(prothesis=prothesis)
+    risk = 0.03*sex + 0.1*age + 0.01*prothesis
+    return f"risk of something: {risk*100}%"
 
+def encode_sex(sex: str) -> int:
+    sex_map = {
+        "male": 1,
+        "female": 2
+    }
+    return sex_map[sex]
+
+def encode_prosthesis(prosthesis: str) -> int:
+    prosthesis_map = {
+        'hemi': 1,
+        'reverse': 2,
+        'anatomical': 3
+    }
+    return prosthesis_map[prosthesis]
 
 if __name__ == "__main__":
     app.run(debug=True)
