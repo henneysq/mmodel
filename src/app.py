@@ -135,7 +135,7 @@ def render_output(age, sex, prosthesis, indication, comcard, comdia, comren, com
         return str(e)
 
     #return f"Risk is {risk}% based on age: {age},\nsex: {sex},\nprosthesis: {prosthesis}, \nindication: {indication}, \ncardiac co-morbidity: {comcard}, \ndiabetic co-mobidity: {comdia}, \nrenal co-morbidity: {comren}, \nneuronal co-morbidity: {comneu}"
-    risk_display = f"""
+    return f"""
         {risk}% risk of serious adverse event(s) within [...] days of surgey.
     """
 
