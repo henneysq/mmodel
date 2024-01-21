@@ -64,7 +64,7 @@ SIDEBAR_STYLE = {
 }
 
 
-app = Dash(__name__, external_stylesheets=[dbc.themes.DARKLY], use_pages=True)# external_stylesheets=EXTERNAL_STYLESHEETS)
+app = Dash(__name__, external_stylesheets=[dbc.themes.DARKLY], use_pages=True, pages_folder="")# external_stylesheets=EXTERNAL_STYLESHEETS)
 
 # Declare server for Heroku deployment. Needed for Procfile.
 server = app.server
