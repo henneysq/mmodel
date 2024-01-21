@@ -83,13 +83,13 @@ def render_output(age, sex, prosthesis, indication, comcard, comdia, comren, com
     
     try:
         sex = encode_sex(sex)
-        prosthesis = encode_prosthesis(prothesis=prosthesis)
+        prosthesis = encode_prosthesis(prosthesis)
         indication = encode_indication(indication)
         comcard = encode_comorb(comcard)
         comdia = encode_comorb(comdia)
         comren = encode_comorb(comren)
         comneu = encode_comorb(comneu)
-        risk = 0.01*age + 0.01*sex + 0.01*prosthesis + 0.01*indication + 0.01*comcard + 0.01*comdia + 0.01*comren + 0.01*comneu
+        risk = 0.1 + 0.01*age + 0.01*sex + 0.01*prosthesis + 0.01*indication + 0.01*comcard + 0.01*comdia + 0.01*comren + 0.01*comneu
         risk = risk * 100
     except Exception as e:
         return str(e)
