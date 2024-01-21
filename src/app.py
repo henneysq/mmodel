@@ -45,7 +45,7 @@ EXTERNAL_STYLESHEETS = [
     }
 ]
 
-style = "src\styles.css"
+style = ["src\styles.css"]
 
 app = Dash(__name__, external_stylesheets=style)# external_stylesheets=EXTERNAL_STYLESHEETS)
 
