@@ -1,7 +1,7 @@
 
 from dash import Dash, dcc, html, Input, Output, callback
 
-external_stylesheets = ["https://codepen.io/chriddyp/pen/bWLwgP.css"]
+external_stylesheets = ["https://gist.githubusercontent.com/ZachSaucier/8295d9dc926d7064ff0d4f3f04b35b55/raw/06a8cc03bbdbb7e36f7ae192f834226320f752cd/dark-theme.css"]
 
 app = Dash(__name__)
 
@@ -11,7 +11,14 @@ hidden_div = html.Div(id="hidden-div", style={"display": "none"})
 
 app.layout = html.Div(
     [
-        html.H6("Change the value in the text box to see callbacks in action!"),
+        html.H6(
+            """ Hi Markos! Congratulations on becoming a dad!
+
+            Here's an ugly and incomplete rendition of your beautiful model. 
+
+            """
+        ),
+        html.H6("Change the value in the to calculate the risk of something!"),
         html.Div([
             "Age: ",
             dcc.Input(id="age", type="number", placeholder="Age"),
@@ -58,10 +65,14 @@ app.layout = html.Div(
 
 @callback(
         Output(component_id="number-out", component_property="children"),
-        Input(component_id="age", component_property="value")
+        Input(component_id="age", component_property="value"),
+        Input(component_id="sex", component_property="value")
 )
-def render_output(age):
-    return f"Age is {age}"
+def render_output(age, sex):
+    if age is None:
+        return f"Please enter age"
+    
+    return f"Age is {age}, sex is {sex}"
 
 # @callback(
 #     Output("number-out", "children"),
