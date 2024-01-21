@@ -1,29 +1,41 @@
 
 from dash import Dash, dcc, html, Input, Output, callback
 
-welcome_msg = """
+WELCOME_MSG = """
     # Markos' Risk Prediction Model
 
     Hi Markos! Congratulations on becoming a dad!
 
     Here's an ugly and incomplete rendition of your beautiful model. It's in progress..
+    """
 
-    ## Background Information
+BACKGROUND_MSG = """
+    # Background Information
 
     This tool implements the prediction model for risk of serious adverse events
     
     ## Model Definition
+    
+    The risk prediction model is based on a [...] model:
 
-    Currently, all parameter weights are 0.01, and the off-set is 0.1.
+    $y = \mathbf{X} \\beta$,
 
-    Sex is encoded 'male': 1, 'female': 2
+    where $y$ is the risk of serious adverse events,
+    $\mathbf{X}$ is the set of predictive variables,
+    and $\\beta$ are the parameters weights.
+
+    ## Parameter Encoding
+
+    Currently, all parameter weights are $0.01$, and the off-set is $0.1$.
+
+    Sex is encoded `'male': 1, 'female': 2`
 
     Prosthesis is encoded `'hemi': 1, 'reverse': 2, 'anatomical': 3`
 
-    Indication is encoded 'acute fracture': 0, 'fraktur sequelae': 1, 'osteoarthritis': 2, 'cuff damage': 4
+    Indication is encoded `'acute fracture': 0, 'fraktur sequelae': 1, 'osteoarthritis': 2, 'cuff damage': 4`
 """
 
-external_stylesheets = [
+EXTERNAL_STYLESHEETS = [
     'https://codepen.io/chriddyp/pen/bWLwgP.css',
     {
         'href': 'https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css',
@@ -33,7 +45,7 @@ external_stylesheets = [
     }
 ]
 
-app = Dash(__name__, external_stylesheets=external_stylesheets)
+app = Dash(__name__, external_stylesheets=EXTERNAL_STYLESHEETS)
 
 # Declare server for Heroku deployment. Needed for Procfile.
 server = app.server
@@ -41,7 +53,7 @@ hidden_div = html.Div(id="hidden-div", style={"display": "none"})
 
 app.layout = html.Div(
     [
-        dcc.Markdown(welcome_msg, mathjax=True),
+        dcc.Markdown(WELCOME_MSG, mathjax=True),
         html.H4("Change the values of factors to calculate the risk of something!"),
         html.Div([
             "Age: ",
@@ -78,34 +90,17 @@ app.layout = html.Div(
             dcc.Dropdown(['yes', 'no'], 'no', id='comorb-neuronal'),
         ]),
 
-        # dcc.Input(
-        #     id="dtrue", type="number",
-        #     debounce=True, placeholder="Debounce True",
-        # ),
         html.Hr(),
         html.Div(id="number-out"),
         dcc.Markdown(
             """
-            Made by [Mark Alexander Henney](https://orcid.org/0000-0002-4343-1068),
-            
             Based on.. by [Markos](),
+            
+            Made by [Mark Alexander Henney](https://orcid.org/0000-0002-4343-1068),
 
             Implemented with [Dash](https://dash.plotly.com/) - see the [github repo](https://github.com/henneysq/mmodel/tree/master)
             """),
-        
-        dcc.Markdown('''
-            ## Model Definition
-
-            This example uses the block delimiter:
-            $$
-            \\frac{1}{(\\sqrt{\\phi \\sqrt{5}}-\\phi) e^{\\frac25 \\pi}} =
-            1+\\frac{e^{-2\\pi}} {1+\\frac{e^{-4\\pi}} {1+\\frac{e^{-6\\pi}}
-            {1+\\frac{e^{-8\\pi}} {1+\\ldots} } } }
-            $$
-
-            This example uses the inline delimiter:
-            $E^2=m^2c^4+p^2c^2$
-            ''', mathjax=True)
+        dcc.Markdown(BACKGROUND_MSG, mathjax=True),
     ]
 )
 
@@ -137,7 +132,10 @@ def render_output(age, sex, prosthesis, indication, comcard, comdia, comren, com
     except Exception as e:
         return str(e)
 
-    return f"Risk is {risk}% based on age: {age},\nsex: {sex},\nprosthesis: {prosthesis}, \nindication: {indication}, \ncardiac co-morbidity: {comcard}, \ndiabetic co-mobidity: {comdia}, \nrenal co-morbidity: {comren}, \nneuronal co-morbidity: {comneu}"
+    #return f"Risk is {risk}% based on age: {age},\nsex: {sex},\nprosthesis: {prosthesis}, \nindication: {indication}, \ncardiac co-morbidity: {comcard}, \ndiabetic co-mobidity: {comdia}, \nrenal co-morbidity: {comren}, \nneuronal co-morbidity: {comneu}"
+    risk_display = """
+
+    """
 
 def encode_sex(sex: str) -> int:
     sex_map = {
