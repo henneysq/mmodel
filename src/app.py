@@ -7,17 +7,46 @@ app = Dash(__name__)
 
 # Declare server for Heroku deployment. Needed for Procfile.
 server = app.server
-
 hidden_div = html.Div(id="hidden-div", style={"display": "none"})
 
 app.layout = html.Div(
     [
-        dcc.Input(id="age", type="number", placeholder="Age"),
-        # html.Hr(),
-        dcc.Dropdown(['male', 'female'], 'male', id='sex'),
-        dcc.Dropdown(['hemi', 'reverse', 'anatomical'], 'hemi', id='prosthesis'),
-        dcc.Dropdown(['acute fracture', 'fraktur sequelae',
+        html.H6("Change the value in the text box to see callbacks in action!"),
+        html.Div([
+            "Age: ",
+            dcc.Input(id="age", type="number", placeholder="Age"),
+        ]),
+        html.Div([
+            "Sex: ",
+            dcc.Dropdown(['male', 'female'], 'male', id='sex'),
+        ]),
+        html.Div([
+            "Prosthesis: ",
+            dcc.Dropdown(['hemi', 'reverse', 'anatomical'], 'hemi', id='prosthesis'),
+        ]),
+        html.Div([
+            "Indication: ",
+            dcc.Dropdown(['acute fracture', 'fraktur sequelae',
                       'osteoarthritis', 'cuff damage'], 'acute fracture', id='indication'),
+        ]),
+        # html.Hr(),
+        html.Div([
+            "Cardiac co-morbidity: ",
+            dcc.Dropdown(['yes', 'no'], 'no', id='comorb-cardiac'),
+        ]),
+        html.Div([
+            "Diabetic co-morbidity: ",
+            dcc.Dropdown(['yes', 'no'], 'no', id='comorb-diabetic'),
+        ]),
+        html.Div([
+            "Renal co-morbidity: ",
+            dcc.Dropdown(['yes', 'no'], 'no', id='comorb-renal'),
+        ]),
+        html.Div([
+            "Neurological co-morbidity: ",
+            dcc.Dropdown(['yes', 'no'], 'no', id='comorb-neuronal'),
+        ]),
+
         # dcc.Input(
         #     id="dtrue", type="number",
         #     debounce=True, placeholder="Debounce True",
@@ -35,12 +64,11 @@ app.layout = html.Div(
     Input("prothesis", "value"),
     Input("indication", "value"),
 )
-def number_render(fval, tval, rangeval):
-# def number_render(age, sex, prothesis, indication):
-    #sex = encode_sex(sex=sex)
-    #prothesis = encode_prosthesis(prothesis=prothesis)
-    #risk = 0.03*sex + 0.1*age + 0.01*prothesis
-    risk = 0.24
+def number_render(age, sex, prothesis, indication):
+    return f"sex: {sex}, age: {age}"
+    sex = encode_sex(sex=sex)
+    prothesis = encode_prosthesis(prothesis=prothesis)
+    risk = 0.03*sex + 0.1*age + 0.01*prothesis
     return f"risk of something: {risk*100}%"
 
 def encode_sex(sex: str) -> int:
