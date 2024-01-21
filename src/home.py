@@ -1,7 +1,7 @@
 import dash
 from dash import Dash, dcc, html, Input, Output, callback
 
-dash.register_page(__name__)
+dash.register_page(__name__, path='/')
 
 WELCOME_MSG = """
     # Markos' Risk Prediction Model
@@ -10,7 +10,8 @@ WELCOME_MSG = """
 
     Here's an ugly and incomplete rendition of your beautiful model. It's in progress..
 
-    See [Background Information](#background-information) for model details.
+    See [Background Information](#background-information) for model details about the model.
+
     """
 
 BACKGROUND_MSG = """
@@ -44,7 +45,7 @@ LR_INDENT = (600, 600)
 layout = html.Div(
     style={'margin-left': f"{LR_INDENT[0]}px", 'margin-right': f"{LR_INDENT[1]}px", "margin-top":"7px"},
     children=[
-        dcc.Markdown(WELCOME_MSG, mathjax=True),
+        # dcc.Markdown(WELCOME_MSG, mathjax=True),
         html.H4("Change the values of factors to calculate the risk of something!"),
         html.Div([
             "Age: ",

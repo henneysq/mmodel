@@ -9,34 +9,8 @@ WELCOME_MSG = """
 
     Here's an ugly and incomplete rendition of your beautiful model. It's in progress..
 
-    See [Background Information](#background-information) for model details.
+    See [Background Information](/background-information) for model details.
     """
-
-BACKGROUND_MSG = """
-    # Background Information 
-
-    This tool implements the prediction model for risk of serious adverse events
-    
-    ## Model Definition
-    
-    The risk prediction model is based on a [...] model:
-
-    $y = \mathbf{X} \\beta$,
-
-    where $y$ is the risk of serious adverse events,
-    $\mathbf{X}$ is the set of predictive variables,
-    and $\\beta$ are the parameters weights.
-
-    ## Parameter Encoding
-
-    Currently, all parameter weights are $0.01$, and the off-set is $0.1$.
-
-    Sex is encoded `'male': 1, 'female': 2`
-
-    Prosthesis is encoded `'hemi': 1, 'reverse': 2, 'anatomical': 3`
-
-    Indication is encoded `'acute fracture': 0, 'fraktur sequelae': 1, 'osteoarthritis': 2, 'cuff damage': 4`
-"""
 
 SITE_INFO = """
             ## Site Information
@@ -90,9 +64,14 @@ sidebar = html.Div(
 )
 
 
+info_content = html.Div(
+    [
+        dcc.Markdown(SITE_INFO)
+    ]
+)
 # content = html.Div(id="page-content")
 
-app.layout = html.Div([dcc.Location(id="url"), sidebar, dash.page_container])
+app.layout = html.Div([dcc.Location(id="url"), sidebar, dash.page_container, info_content])
 
 
 # @app.callback(Output("page-content", "children"), [Input("url", "pathname")])
