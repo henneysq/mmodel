@@ -1,7 +1,7 @@
 import dash
 from dash import Dash, dcc, html, Input, Output, callback
 
-dash.register_page(__name__)
+dash.register_page(__name__, path='/background-information')
 
 LR_INDENT = (600, 600)
 
