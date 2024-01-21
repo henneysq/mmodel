@@ -40,7 +40,7 @@ EXTERNAL_STYLESHEETS = [
     "https://raw.githubusercontent.com/kevquirk/simple.css/main/simple-v1.css"
 ]
 
-app = Dash(__name__, external_stylesheets=[dbc.themes.QUARTZ])# external_stylesheets=EXTERNAL_STYLESHEETS)
+app = Dash(__name__, external_stylesheets=[dbc.themes.VAPOR])# external_stylesheets=EXTERNAL_STYLESHEETS)
 
 # Declare server for Heroku deployment. Needed for Procfile.
 server = app.server
